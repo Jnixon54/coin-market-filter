@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import CoinData from '../CoinData/CoinData';
 
 export default class CoinList extends Component {
   constructor(){
@@ -34,7 +35,7 @@ export default class CoinList extends Component {
     //   //   // currentList.push(this.state.coinList[i]);
     //   // }
     // }
-
+    console.log(val);
     currentList = currentList.filter(item => item['symbol'].toLowerCase().includes(val.toLowerCase()));
 
     this.setState({currentList: currentList, userInput: val});
@@ -47,7 +48,7 @@ export default class CoinList extends Component {
         <ul>
           {
             this.state.currentList.map( (item) => { 
-              return <li className="listItem">{ JSON.stringify(item) }</li>;})
+              return <li className="listItem coinBox"><CoinData coin={ JSON.stringify(item) } /> </li>;})
           }
         </ul>
       </div>
