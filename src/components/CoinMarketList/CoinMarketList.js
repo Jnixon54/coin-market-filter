@@ -5,46 +5,48 @@ export default class CoinList extends Component {
     super();
 
     this.state = {
-      coinList: [],
+      initialCoinList: [],
+      currentList: [],
       userInput: ''
     }
 
   }
 
-
-  
   componentWillMount(){
     this.retrieveMarketData();
   }
 
   retrieveMarketData(){
-    return fetch('https://api.coinmarketcap.com/v1/ticker/').then(response => response.json()).then(result => this.setState({coinList: result}));
+    return fetch('https://api.coinmarketcap.com/v1/ticker/').then(response => response.json()).then(result => this.setState({initialCoinList: result, currentList: result}));
   }
 
   // handleChange(val){
   //   this.setState({ userInput: val });
   // }
 
-  filterCoinList(val){
-    this.setState({ userInput: val });
-    let updatedList = [];
+  filterList(val){
+    let currentList = this.state.initialCoinList;
+    // console.log(currentList);
 
-    for (let i = 0; i < this.state.coinList.length; i++){
-      if (this.state.coinList[i].includes(val)){
-        updatedList.push(this.state.coinList[i]);
-      }
-    }
-    this.setState({coinList: updatedList});
+    // for (let i = 0; i < this.state.coinList.length; i++){
+    //   // if (this.state.coinList[i]['symbol'].toLowerCase().includes(val.toLowerCase())){ // May require babel-polyfill
+
+    //   //   // currentList.push(this.state.coinList[i]);
+    //   // }
+    // }
+
+    currentList = currentList.filter(item => item['symbol'].toLowerCase().includes(val.toLowerCase()));
+
+    this.setState({currentList: currentList, userInput: val});
   }
 
   render(){
     return(
       <div className="filterList">
-        <input type="text" placeholder="Search Symbol or Name" onChange={ (e) =>  this.filterCoinList(e.target.value)}/>
-        <p> { this.state.userInput } </p>
+        <input className="searchField" type="text" placeholder="Search Symbol or Name" onChange={ (e) =>  this.filterList(e.target.value)}/>
         <ul>
           {
-            this.state.coinList.map( (item) => { 
+            this.state.currentList.map( (item) => { 
               return <li className="listItem">{ JSON.stringify(item) }</li>;})
           }
         </ul>
