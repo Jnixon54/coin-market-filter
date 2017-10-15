@@ -48,7 +48,7 @@ export default class CoinList extends Component {
         <ul>
           {
             this.state.currentList.map( (item) => { 
-              return <li className="listItem coinBox"><CoinData coin={ JSON.stringify(item) } /> </li>;})
+              return <a className="list-link" href={"https://coinmarketcap.com/currencies/" + item['id'] }><li className="listItem coinBox"><CoinData coin={ JSON.stringify(item) } /></li></a>;})
           }
         </ul>
       </div>
