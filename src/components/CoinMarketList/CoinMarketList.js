@@ -56,11 +56,12 @@ export default class CoinList extends Component {
         <input className="searchField" type="text" placeholder="Search Symbol or Name" onChange={ (e) =>  this.filterList(e.target.value)}/>
         <ul>
           {
-            currentList.length > 0 ?
+            currentList.length > 0 
+            ?
             this.state.currentList.map( (item) => { 
               return <a className="list-link" href={"https://coinmarketcap.com/currencies/" + item['id'] }><li className="listItem coinBox"><CoinData coin={ JSON.stringify(item) } /></li></a>;})
-              :
-              <p>No items found.</p>
+            :
+            <p>No items found.</p>
           }
         </ul>
       </div>

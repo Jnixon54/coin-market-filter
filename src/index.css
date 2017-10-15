@@ -93,3 +93,11 @@ ul {
   
 
 }
+
+.price-up {
+  color:lightgreen;
+}
+
+.price-down {
+  color: rgb(255, 62, 62);
+}

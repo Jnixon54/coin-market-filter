@@ -18,10 +18,14 @@ export default class CoinData extends Component {
     return(
       <div className="coin-container">
         <div className="coin-data">
-          <span>{ JSON.parse(this.props.coin)['symbol'] }: ${JSON.parse(this.props.coin)['price_usd']} | {JSON.parse(this.props.coin)['price_btc']}</span>
+          <span>{ JSON.parse(this.props.coin)['rank'] }: { JSON.parse(this.props.coin)['symbol'] }: ${JSON.parse(this.props.coin)['price_usd']} | {JSON.parse(this.props.coin)['price_btc']}</span>
         </div>
         <div className="coin-percent">
-          <span>{JSON.parse(this.props.coin)['percent_change_24h']}</span>
+          {JSON.parse(this.props.coin)['percent_change_24h'] >= 0 ? 
+          <span className="price-up">{JSON.parse(this.props.coin)['percent_change_24h']}</span>
+          :
+          <span className="price-down">{JSON.parse(this.props.coin)['percent_change_24h']}</span>
+          }
         </div>
       </div>
     )
