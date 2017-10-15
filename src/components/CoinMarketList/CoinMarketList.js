@@ -34,7 +34,7 @@ export default class CoinList extends Component {
     //   // }
     // }
     console.log(val);
-    currentList = currentList.filter(item => item['symbol'].toLowerCase().includes(val.toLowerCase()));
+    currentList = currentList.filter(item => item['symbol'].toLowerCase().includes(val.toLowerCase()) || item['name'].toLowerCase().includes(val.toLowerCase()));
 
     this.setState({currentList: currentList, userInput: val});
   }
