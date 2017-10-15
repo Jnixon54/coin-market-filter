@@ -10,6 +10,11 @@ export default class CoinData extends Component {
   }
 
   render(){
+    // if (JSON.parse(this.props.coin).length === 0){
+    //   console.log(JSON.parse(this.props.coin));
+    //   return <p>No items found.</p>;
+    // }
+
     return(
       <div className="coin-container">
         <div className="coin-data">

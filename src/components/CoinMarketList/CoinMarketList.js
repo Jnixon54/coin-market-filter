@@ -8,7 +8,8 @@ export default class CoinList extends Component {
     this.state = {
       initialCoinList: [],
       currentList: [],
-      userInput: ''
+      userInput: '',
+      isLoading: false
     }
 
   }
@@ -18,12 +19,9 @@ export default class CoinList extends Component {
   }
 
   retrieveMarketData(){
-    return fetch('https://api.coinmarketcap.com/v1/ticker/').then(response => response.json()).then(result => this.setState({initialCoinList: result, currentList: result}));
+    this.state.isLoading = true;
+    return fetch('https://api.coinmarketcap.com/v1/ticker/').then(response => response.json()).then(result => this.setState({initialCoinList: result, currentList: result, isLoading: false}));
   }
-
-  // handleChange(val){
-  //   this.setState({ userInput: val });
-  // }
 
   filterList(val){
     let currentList = this.state.initialCoinList;
@@ -42,20 +40,30 @@ export default class CoinList extends Component {
   }
 
   render(){
+    const { isLoading, currentList } = this.state;
+    
+    if (isLoading) {
+      return(
+        <div className="filterList">
+        <input className="searchField" type="text" placeholder="Search Symbol or Name" onChange={ (e) =>  this.filterList(e.target.value)}/>
+        <p>Loading...</p>
+        </div>
+      );
+    }
+
     return(
       <div className="filterList">
         <input className="searchField" type="text" placeholder="Search Symbol or Name" onChange={ (e) =>  this.filterList(e.target.value)}/>
         <ul>
           {
+            currentList.length > 0 ?
             this.state.currentList.map( (item) => { 
               return <a className="list-link" href={"https://coinmarketcap.com/currencies/" + item['id'] }><li className="listItem coinBox"><CoinData coin={ JSON.stringify(item) } /></li></a>;})
+              :
+              <p>No items found.</p>
           }
         </ul>
       </div>
     );
   }
 }
-
-// set initial list with all coins.
-// filter coins based on input.
-// if no input display full list.
